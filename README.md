@@ -1,50 +1,90 @@
-# antenati
-A tool to download data from the *[Portale Antenati](http://antenati.cultura.gov.it/)*, the genealogy digital archive maintained by the italian **Ministero per i beni e le attività culturali**.
+# Antenati High Quality Downloader - README
 
-Since the website tends to be pretty slow in the evening, we present a script to help the retrieval of the documents for your family tree. The script allows you to download **all the images of any archive at the same time**, without any human action. Just launch the script and have a coffee while it downloads all the stuff for you.
+This tool downloads high-resolution images from the Antenati website using IIIF tile-based reconstruction.
 
-## GUI version
+---
 
-Just get the executable from the [release artifacts](https://github.com/gcerretani/antenati/releases/latest), and have fun!
+## 🔧 Prerequisites & Installation
 
-![GUI Screenshot](docs/gui_screenshot.png)
+Before using this script, make sure you have:
 
-#### Example:
-In the website, navigate to the archive you want to download. For example, for the people born in Viareggio in 1807 you should find the page:
+### 1. Python Installed
 
-[https://antenati.cultura.gov.it/ark:/12657/an_ua19944535/w9DWR8x](https://antenati.cultura.gov.it/ark:/12657/an_ua19944535/w9DWR8x)
+* Download and install Python (version 3.8 or above): [https://www.python.org/downloads/](https://www.python.org/downloads/)
+* During installation, make sure to check **"Add Python to PATH"**.
 
-Copy the link to the first page, and paste it in the Archive URL field of the window. Then, specify a destination folder: the results will be placed there, in a new subfolder named *archivio-di-stato-di-lucca-stato-civile-napoleonico-viareggio-1807-nati-19944549*.
+### 2. Required Python Libraries
 
-## CLI version
+Open a terminal or command prompt and navigate to the folder with the script. Run:
 
-### Requirements
-The software is written in Python 3 and tested with Python 3.9. On Windows the version on the Microsoft Store is fine, on Linux use your distribution package manager.
+```bash
+pip install -r requirements.txt
+```
 
-### Usage
-Open your preferite terminal and change directory to where you've extracted the content of this repo. Then execute the following commands.
+This will install:
 
-#### Install the dependencies
-The first time you will have to install the dependencies:
+* `click`
+* `python-slugify`
+* `humanize`
+* `tqdm`
+* `requests`
+* `pillow` (required separately)
 
-    pip install -r requirements.txt
+If `pillow` is not installed via `requirements.txt`, install it manually:
 
-#### Run
-To download the images of a gallery, execute the script passing the URL of a collection you want to download as argument:
+```bash
+pip install pillow
+```
 
-    python3 antenati.py <URL of the album>
+---
 
-The files will be downloaded to a new folder named as *ARCHIVE-PLACE-YEAR-TYPE-ID* of the downloaded archive. For more options, see the help:
+## 📁 Setup: Choose Your Output Folder
 
-    python3 antenati.py -h
+Before running the script, you must define where you want the downloaded images to be saved.
 
-#### Example:
-In the website, navigate to the archive you want to download. For example, for the people born in Viareggio in 1807 you should find the page:
+1. Open the script file `download_hq.pyw` with a text editor (like Notepad++ or VSCode).
+2. Look for the line starting with:
 
-[https://antenati.cultura.gov.it/ark:/12657/an_ua19944535/w9DWR8x](https://antenati.cultura.gov.it/ark:/12657/an_ua19944535/w9DWR8x)
+```python
+output_dir = Path(
+```
 
-Then, copy the link to the first page, and call the script with that link as argument:
+3. Change the folder path to the one you want. Example:
 
-    python3 antenati.py https://antenati.cultura.gov.it/ark:/12657/an_ua19944535/w9DWR8x
+```python
+output_dir = Path(r"C:\Users\YourName\Documents\Antenati Downloads") / subfolder_name
+```
 
-The results will be placed in a folder named *archivio-di-stato-di-lucca-stato-civile-napoleonico-viareggio-1807-nati-19944549*.
+> **Make sure to use double backslashes `\\` or prefix the string with `r"..."` when using Windows paths.**
+
+---
+
+## ▶️ How to Use
+
+1. **Double-click** the `download_hq.pyw` file (or run it from terminal).
+2. **Open** the registry on Antenati and **Copy** the URL of the Antenati gallery when prompted (example: https://antenati.cultura.gov.it/ark:/12657/an_ua36176/ )
+3. Wait as the tool downloads and assembles the high-resolution images.
+4. Images will be saved in the folder you defined earlier, in a subfolder named after the archive, comune, typology, and year.
+
+---
+
+## 📄 Output
+
+* Images will be named by page (e.g., `pag-1.jpg`, `pag-2.jpg`, etc.)
+* A `download_log.txt` will summarize download results, errors, and timings.
+
+---
+
+## ❓ Need Help?
+
+If you get any errors, check:
+
+* Your internet connection
+* That the URL is valid and from Antenati
+* That Python and all required libraries are installed
+
+You can also ask for help by sharing the log file.
+
+---
+
+Buona giornata! 🎉
